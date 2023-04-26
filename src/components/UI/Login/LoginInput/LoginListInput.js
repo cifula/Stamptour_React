@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import React from 'react';
-import Input from './../../atoms/input/Input';
+import Input from '../../atoms/input/Input';
 
 
 const loginInput = css`
@@ -24,12 +24,11 @@ const icon = css`
     height: 40px;
 `;
 
-const LoginInput = ({ type, placeholder, onChange, name, children}) => {
+const LoginListInput = ({ placeholder, onChange, name, children}) => {
     return (
         <div css={loginInput}>
             <div css={icon}>{children}</div>
             <Input 
-            type={type} 
             placeholder={placeholder} 
             onChange={onChange}
             name={name}/>
@@ -37,4 +36,4 @@ const LoginInput = ({ type, placeholder, onChange, name, children}) => {
     );
 };
 
-export default LoginInput;
+export default LoginListInput;

@@ -9,8 +9,8 @@ function App() {
     <>
       <Global styles={ Reset }></Global>
       <Routes>
-        <Route exact path="super/login" Component={Login} />
-        <Route path="super/register" Component={Register} />
+        <Route exact path="/login" Component={Login} />
+        <Route path="/register" Component={Register} />
       </Routes>
     </>
   );

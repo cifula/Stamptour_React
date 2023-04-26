@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoginInput from '../../components/UI/Login/LoginInput/LoginInput';
 import { FiUser, FiLock } from 'react-icons/fi';
-import { BsGoogle } from 'react-icons/bs';
-import { SiNaver, SiKakao } from 'react-icons/si';
 
 const container = css`
     display: flex;
@@ -88,13 +86,13 @@ const Login = () => {
             </header>
             <main css={mainContainer}>
                 <div css={authForm}>
-                    <label css={inputLabel}>Email</label>
-                    <LoginInput type="email" placeholder="Type your email" name="email">
+                    <label css={inputLabel}>ID</label>
+                    <LoginInput type="id" placeholder="Type your ID" name="id">
                         <FiUser />
                     </LoginInput>
 
                     <label css={inputLabel}>Password</label>
-                    <LoginInput type="password" placeholder="Type your password" name="password">
+                    <LoginInput type="password" placeholder="Type your Password" name="password">
                         <FiLock />
                     </LoginInput>
 
