@@ -24,11 +24,12 @@ const icon = css`
     height: 40px;
 `;
 
-const LoginListInput = ({ placeholder, onChange, name, children}) => {
+const AuthInput = ({ type, placeholder, onChange, name, children}) => {
     return (
         <div css={loginInput}>
             <div css={icon}>{children}</div>
             <Input 
+            type={type} 
             placeholder={placeholder} 
             onChange={onChange}
             name={name}/>
@@ -36,4 +37,4 @@ const LoginListInput = ({ placeholder, onChange, name, children}) => {
     );
 };
 
-export default LoginListInput;
+export default AuthInput;

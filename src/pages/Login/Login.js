@@ -1,107 +1,59 @@
 /** @jsxImportSource @emotion/react */
+import * as s from './style';
 import { css } from '@emotion/react'
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LoginInput from '../../components/UI/Login/LoginInput/LoginInput';
 import { FiUser, FiLock } from 'react-icons/fi';
-
-const container = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 80px 30px;
-`;
-
-const logo = css`
-    margin: 50px 0px;
-    font-size: 34px;
-    font-weight: 600;
-`;
-
-const mainContainer = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    padding: 40px 20px;
-    width: 400px;
-`;
-
-const authForm = css`
-    width: 100%;
-`;
-
-const inputLabel = css`
-    margin-left: 5px;
-    font-size: 12px;
-    font-weight: 600;
-`;
-
-const forgotPassword = css`
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 45px;
-    width: 100%;
-    font-size: 12px;
-    font-weight: 600;
-`;
-
-const loginButton = css`
-    margin-top: 40px;
-    border: 1px solid #dbdbdb;
-    border-radius: 7px;
-    width: 100%;
-    height: 50px;
-    background-color: white;
-    font-weight: 900;
-    cursor: pointer;
-    &:hover {
-        background-color: #fafafa;
-    }
-    &:active {
-        background-color: #eee;
-    }
-`;
-
-const register = css`
-    margin-top: 10px;
-    font-weight: 600;
-`;
-
-const errorMsg = css`
-    margin-left: 10px;
-    margin-bottom: 20px;
-    font-size: 12px;
-    color: red;
-`;
-
+import AuthInput from './../../components/UI/Auth/AuthInput/AuthInput';
+import axios from 'axios';
 
 const Login = () => {
+    const [ loginUser, setLoginUser ] = useState({username: "", password: ""});
+    const [ errorMessages, setErrorMessages ] = useState({username: "", password: ""});
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setLoginUser({ ...loginUser, [name]: value });
+    }
+
+    const loginHandleSubmit = async () => {
+        const option = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        try {
+            const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
+            setErrorMessages({usename: "", password: ""});
+            const accessToken = response.data.grantType + " " + response.data.accessToken;
+            localStorage.setItem("accessToken", accessToken);
+            setRefresh(false);
+        }catch(error) {
+            setErrorMessages({usename: "", password: "", ...error.response.data.errorData});
+        }
+    }
     return (
-        <div css={container}>
+        <div css={s.container}>
             <header>
-                <h1 css={logo}>Login</h1>
+                <h1 css={s.logo}>Login</h1>
             </header>
-            <main css={mainContainer}>
-                <div css={authForm}>
-                    <label css={inputLabel}>ID</label>
-                    <LoginInput type="id" placeholder="Type your ID" name="id">
+            <main css={s.mainContainer}>
+                <div css={s.authForm}>
+                    <label css={s.inputLabel}>ID</label>
+                    <AuthInput type="id" placeholder="Type your ID" onChange={handleChange} name="username">
                         <FiUser />
-                    </LoginInput>
+                    </AuthInput>
 
-                    <label css={inputLabel}>Password</label>
-                    <LoginInput type="password" placeholder="Type your Password" name="password">
+                    <label css={s.inputLabel}>Password</label>
+                    <AuthInput type="password" placeholder="Type your Password" onChange={handleChange} name="password">
                         <FiLock />
-                    </LoginInput>
+                    </AuthInput>
 
-                    <button css={loginButton}>LOGIN</button>
+                    <button css={s.loginButton} onClick={loginHandleSubmit}>LOGIN</button>
                 </div>
             </main>
 
             <footer>
-                <div css={register}><Link to="/register">SIGN UP</Link></div>
+                <div css={s.register}><Link to="/register">SIGN UP</Link></div>
             </footer>
         </div>
     );

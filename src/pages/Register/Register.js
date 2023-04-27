@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import LoginInput from '../../components/UI/Login/LoginInput/LoginInput';
 import { FiUser, FiLock } from 'react-icons/fi';
 import { BiRename } from 'react-icons/bi';
 import { AiFillSetting } from 'react-icons/ai';
 import * as s from './style';
 import axios from 'axios';
-import LoginListInput from './../../components/UI/Login/LoginInput/LoginListInput';
+import AuthInput from './../../components/UI/Auth/AuthInput/AuthInput';
 
 const Register = () => {
     const [registerUser, setRegisterUser] = useState({username: "", password: "", name:""})
     const [errorMessages, setErrorMessages] = useState({username: "", password: "", name: ""});
+    const navigate = useNavigate();
 
     const onChangeHandle = (e) => {
         const {name, value} = e.target;
@@ -31,7 +31,7 @@ const Register = () => {
             await axios.post("http://localhost:8080/auth/signup", JSON.stringify(data), option);
             setErrorMessages({username: "", password: "", name: ""});
             alert("회원가입 성공!");
-            // navigate("/login");
+            navigate("/login");
             
         } catch(error) {
             setErrorMessages({username: "", password: "", name: "", ...error.response.data.errorData});
@@ -46,27 +46,21 @@ const Register = () => {
             <main css={s.mainContainer}>
                 <div css={s.authForm}>
                     <label css={s.inputLabel}>ID</label>
-                    <LoginInput type="id" placeholder="Type your ID" name="username" onChange={onChangeHandle}>
+                    <AuthInput type="id" placeholder="Type your ID" name="username" onChange={onChangeHandle}>
                         <FiUser />
-                    </LoginInput>
+                    </AuthInput>
                     <div css={s.errorMsg}>{errorMessages.id}</div>
 
                     <label css={s.inputLabel}>Password</label>
-                    <LoginInput type="password" placeholder="Type your Password" name="password" onChange={onChangeHandle}>
+                    <AuthInput type="password" placeholder="Type your Password" name="password" onChange={onChangeHandle}>
                         <FiLock />
-                    </LoginInput>
+                    </AuthInput>
                     <div css={s.errorMsg}>{errorMessages.password}</div>
 
                     <label css={s.inputLabel}>Name</label>
-                    <LoginInput type="text" placeholder="Type your name" name="name" onChange={onChangeHandle}>
+                    <AuthInput type="text" placeholder="Type your name" name="name" onChange={onChangeHandle}>
                         <BiRename />
-                    </LoginInput>
-                    <div css={s.errorMsg}>{errorMessages.name}</div>
-
-                    <label css={s.inputLabel}>Role</label>
-                    <LoginListInput list="roles" placeholder="Type your name" name="name" onChange={onChangeHandle}>
-                        <AiFillSetting />
-                    </LoginListInput>
+                    </AuthInput>
                     <div css={s.errorMsg}>{errorMessages.name}</div>
                     
                     <button css={s.loginButton} onClick={registeSubmit}>REGISTER</button>

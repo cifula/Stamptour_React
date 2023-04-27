@@ -38,9 +38,8 @@ export const Reset = css`
     }
     body {
         margin: 10px auto;
-        border: 3px solid #dbdbdb;
         border-radius: 10px;
-        width: 768px;
+        width: 1200px;
         height: 1000px;
         line-height: 1;
     }
