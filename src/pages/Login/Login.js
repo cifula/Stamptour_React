@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import * as s from './style';
-import { css } from '@emotion/react'
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiUser, FiLock } from 'react-icons/fi';
@@ -26,7 +25,7 @@ const Login = () => {
             setErrorMessages({usename: "", password: ""});
             const accessToken = response.data.grantType + " " + response.data.accessToken;
             localStorage.setItem("accessToken", accessToken);
-            setRefresh(false);
+            // setRefresh(false);
         }catch(error) {
             setErrorMessages({usename: "", password: "", ...error.response.data.errorData});
         }

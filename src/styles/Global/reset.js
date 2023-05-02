@@ -36,11 +36,15 @@ export const Reset = css`
     footer, header, hgroup, menu, nav, section {
         display: block;
     }
-    body {
+    #root {
+        display: block;
         margin: 10px auto;
         border-radius: 10px;
-        width: 1200px;
-        height: 1000px;
+        width: 100%;
+        height: 1024px;
+    }
+    body {
+        display: block;
         line-height: 1;
     }
     ol, ul {
